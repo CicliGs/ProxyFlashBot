@@ -2,6 +2,7 @@ from aiogram import Router, F, Bot, types
 from aiogram.types import CallbackQuery, LabeledPrice
 from keyboards import reply, inline
 from config_reader import config
+from localization.translations import choose_language, lan
 
 router = Router()
 PRICES = {
@@ -26,34 +27,49 @@ async def back(call: CallbackQuery):
 @router.callback_query(F.data == "buy_poland")
 async def buy_poland(call: CallbackQuery):
     Constants.country_proxy = 'Poland'
-    await call.message.edit_text("Выберите длительность работы прокси:", reply_markup=inline.selecting_proxy_duration_kb)
+    await call.message.edit_text(
+        choose_language('Выберите длительность работы прокси:', lan.getLanguage()),
+        reply_markup=inline.selecting_proxy_duration_kb
+    )
 
 
 @router.callback_query(F.data == "buy_duration_day") #Покупка на определённый срок
 async def buy_day_answer(call: CallbackQuery):
     Constants.duration_proxy = 1
-    await call.message.edit_text("Выберите способ оплаты:", reply_markup=inline.top_up_kb)
+    await call.message.edit_text(
+        choose_language('Выберите способ оплаты:', lan.getLanguage()),
+        reply_markup=inline.top_up_kb
+    )
     await call.answer()
 
 
 @router.callback_query(F.data == "buy_duration_week")
 async def buy_week_answer(call: CallbackQuery):
     Constants.duration_proxy = 7
-    await call.message.edit_text("Выберите способ оплаты:", reply_markup=inline.top_up_kb)
+    await call.message.edit_text(
+        choose_language('Выберите способ оплаты:', lan.getLanguage()),
+        reply_markup=inline.top_up_kb
+    )
     await call.answer()
 
 
 @router.callback_query(F.data == "buy_duration_month")
 async def buy_week_answer(call: CallbackQuery):
     Constants.duration_proxy = 30
-    await call.message.edit_text("Выберите способ оплаты:", reply_markup=inline.top_up_kb)
+    await call.message.edit_text(
+        choose_language('Выберите способ оплаты:', lan.getLanguage()),
+        reply_markup=inline.top_up_kb
+    )
     await call.answer()
 
 
 @router.callback_query(F.data == "buy_duration_year")
 async def buy_week_answer(call: CallbackQuery):
     Constants.duration_proxy = 365
-    await call.message.edit_text("Выберите способ оплаты:", reply_markup=inline.top_up_kb)
+    await call.message.edit_text(
+        choose_language('Выберите способ оплаты:', lan.getLanguage()),
+        reply_markup=inline.top_up_kb
+    )
     await call.answer()
 
 
@@ -88,6 +104,7 @@ async def buy_proxy(country: str, duration: int, bot: Bot, call: CallbackQuery):
     if duration == 1:
         prices_ = PRICES.get('day')
         start_parameter_ = 'one-day-subscription'
+        photo_url_ = 'https://raw.githubusercontent.com/CicliGs/Multiuser_chat/main/images/%D0%9E%D0%B4%D0%B8%D0%BD%20%D0%B3%D0%BE%D0%B4.png'
     elif duration == 7:
         prices_ = PRICES.get('week')
         start_parameter_ = 'one-week-subscription'
@@ -100,7 +117,8 @@ async def buy_proxy(country: str, duration: int, bot: Bot, call: CallbackQuery):
                            description="Аренда прокси сервера с регионом " + country + " на " + str(duration) + " дней",
                            provider_token=config.payment_token_test.get_secret_value(),
                            currency="RUB",
-                           photo_url="https://telegram.org/file/400780400534/4/4SMmJ6f4F1E.573667/b64e65fb46f54267aa",
+                           #photo_url="https://telegram.org/file/400780400534/4/4SMmJ6f4F1E.573667/b64e65fb46f54267aa",
+                           photo_url=photo_url_,
                            photo_width=416,
                            photo_height=234,
                            is_flexible=False,
