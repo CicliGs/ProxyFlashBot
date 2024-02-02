@@ -1,47 +1,55 @@
 from aiogram import Router
 from aiogram.types import Message
-from aiogram.filters import Command, CommandObject, CommandStart
+from aiogram.filters import Command, CommandStart
 from aiogram.utils.markdown import hbold
-from localization.translations import choose_language, lan
+from localization.translations import choose_language
 
-from keyboards import reply, inline
+from keyboards import inline
 
 router = Router()
+language: str
+
 
 @router.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
     await message.answer(f"Hello, {hbold(message.from_user.username)}!")
-    print(message.from_user.language_code)
-    lan.setLanguage(message.from_user.language_code)
+    global language
+    language = message.from_user.language_code
 
 
 @router.message(Command("proxy"))
 async def proxy(message: Message) -> None:
-    print(lan.getLanguage())
-    lan.setLanguage(message.from_user.language_code)
+    global language
+    language = message.from_user.language_code
     await message.answer(
-        choose_language('Выберите регион:', lan.getLanguage()),
-        reply_markup=inline.proxy_kb
+        choose_language('Выберите регион:', language),
+        reply_markup=inline.proxy_kb[language]
     )
 
 
 @router.message(Command("help"))
 async def help(message: Message) -> None:
+    global language
+    language = message.from_user.language_code
     await message.answer(
-        choose_language('Выберите необходимый вариант:', lan.getLanguage()),
-        reply_markup=inline.help_kb
+        choose_language('Выберите необходимый вариант:', language),
+        reply_markup=inline.help_kb[language]
     )
 
 
 @router.message(Command("affiliate"))
 async def affiliate(message: Message) -> None:
+    global language
+    language = message.from_user.language_code
     await message.answer(
-        choose_language('Данная функция пока в разработке...', lan.getLanguage())
+        choose_language('Данная функция пока в разработке...', language)
     )
 
 
 @router.message(Command("my_proxy"))
 async def my_proxy(message: Message) -> None:
+    global language
+    language = message.from_user.language_code
     await message.answer(
-        choose_language('Данная функция пока в разработке...', lan.getLanguage())
+        choose_language('Данная функция пока в разработке...', language)
     )

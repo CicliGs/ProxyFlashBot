@@ -1,36 +1,43 @@
+from aiogram.types import BotCommand
+
 translations = {
     'en': {
         'Выберите регион:': 'Select a region:',
         'Выберите необходимый вариант:': 'Select the desired option:',
         'Данная функция пока в разработке...': 'This feature is still in development...',
-        'Нужна другая локация': 'We need another location',
-        'Назад': 'Back',
-        'Польша': 'Poland',
-        'Связаться с нами': 'Contact us',
-        'Криптовалюта 💲': 'Cryptocurrency 💲',
-        'Карточка 💳': 'Debit card 💳',
-        '1 день (5$)': '1 day (5$)',
-        '1 неделя (15$)': '1 week (15$)',
-        '1 месяц (40$)': '1 month (40$)',
-        '1 год (??$)': '1 year (??$)',
-        'FAQ': 'FAQ',
+        'Выберите длительность работы прокси:': 'Select the duration of the proxy operation:',
+        'Выберите способ оплаты:': 'Select a payment method:'
     }
+}
+
+bot_commands = {
+    'ru': [
+        BotCommand(command="/proxy", description="Купить прокси"),
+        BotCommand(command="/help", description="Помощь"),
+        BotCommand(command="/affiliate", description="Партнёрская программа"),
+        BotCommand(command="/my_proxy", description="Мои прокси")
+    ],
+    'en': [
+        BotCommand(command="/proxy", description="Buy proxy"),
+        BotCommand(command="/help", description="Help"),
+        BotCommand(command="/affiliate", description="Affiliate program"),
+        BotCommand(command="/my_proxy", description="My proxy")
+    ]
 }
 
 
 def choose_language(text, lang='ru'):
-    #print(lan.getLanguage())
     if lang == 'ru':
         return text
     else:
         global translations
         try:
-            return translations[lan.getLanguage()][text]
+            return translations[lang][text]
         except:
             return text
 
 
-class lan:
+class lang_:
     language = 'ru'
     @classmethod
     def setLanguage(cls, language):

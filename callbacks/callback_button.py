@@ -1,8 +1,8 @@
 from aiogram import Router, F, Bot, types
 from aiogram.types import CallbackQuery, LabeledPrice
-from keyboards import reply, inline
+from keyboards import inline
 from config_reader import config
-from localization.translations import choose_language, lan
+from localization.translations import choose_language
 
 router = Router()
 PRICES = {
@@ -17,6 +17,7 @@ class Constants:
     country_proxy: str = 'None'
     duration_proxy: int = 0
     payment_method: str = 'None'
+    language: str = 'en'
 
 
 @router.callback_query(F.data == "back")
@@ -27,18 +28,20 @@ async def back(call: CallbackQuery):
 @router.callback_query(F.data == "buy_poland")
 async def buy_poland(call: CallbackQuery):
     Constants.country_proxy = 'Poland'
+    Constants.language = call.from_user.language_code
     await call.message.edit_text(
-        choose_language('Выберите длительность работы прокси:', lan.getLanguage()),
-        reply_markup=inline.selecting_proxy_duration_kb
+        choose_language('Выберите длительность работы прокси:', Constants.language),
+        reply_markup=inline.selecting_proxy_duration_kb[Constants.language]
     )
 
 
 @router.callback_query(F.data == "buy_duration_day") #Покупка на определённый срок
 async def buy_day_answer(call: CallbackQuery):
+    call.message.from_user.language_code
     Constants.duration_proxy = 1
     await call.message.edit_text(
-        choose_language('Выберите способ оплаты:', lan.getLanguage()),
-        reply_markup=inline.top_up_kb
+        choose_language('Выберите способ оплаты:', Constants.language),
+        reply_markup=inline.top_up_kb[Constants.language]
     )
     await call.answer()
 
@@ -47,8 +50,8 @@ async def buy_day_answer(call: CallbackQuery):
 async def buy_week_answer(call: CallbackQuery):
     Constants.duration_proxy = 7
     await call.message.edit_text(
-        choose_language('Выберите способ оплаты:', lan.getLanguage()),
-        reply_markup=inline.top_up_kb
+        choose_language('Выберите способ оплаты:', Constants.language),
+        reply_markup=inline.top_up_kb[Constants.language]
     )
     await call.answer()
 
@@ -57,8 +60,8 @@ async def buy_week_answer(call: CallbackQuery):
 async def buy_week_answer(call: CallbackQuery):
     Constants.duration_proxy = 30
     await call.message.edit_text(
-        choose_language('Выберите способ оплаты:', lan.getLanguage()),
-        reply_markup=inline.top_up_kb
+        choose_language('Выберите способ оплаты:', Constants.language),
+        reply_markup=inline.top_up_kb[Constants.language]
     )
     await call.answer()
 
@@ -67,8 +70,8 @@ async def buy_week_answer(call: CallbackQuery):
 async def buy_week_answer(call: CallbackQuery):
     Constants.duration_proxy = 365
     await call.message.edit_text(
-        choose_language('Выберите способ оплаты:', lan.getLanguage()),
-        reply_markup=inline.top_up_kb
+        choose_language('Выберите способ оплаты:', Constants.language),
+        reply_markup=inline.top_up_kb[Constants.language]
     )
     await call.answer()
 
