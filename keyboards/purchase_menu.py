@@ -6,55 +6,6 @@ from utils.load_json_config import load_json_config
 data = load_json_config()
 order = data['order']
 
-proxy_kb = {
-    'ru': InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                InlineKeyboardButton(text='П', callback_data="buy_poland")
-            ],
-            [
-                InlineKeyboardButton(text='Нужна другая локация', callback_data="0"),
-                InlineKeyboardButton(text='Назад', callback_data="back")
-            ]
-        ]
-    ),
-    'en': InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                InlineKeyboardButton(text='Poland', callback_data="buy_country_poland")
-            ],
-            [
-                InlineKeyboardButton(text='We need another location', callback_data="0"),
-                InlineKeyboardButton(text='Back', callback_data="back")
-            ]
-        ]
-    )
-}
-
-help_kb = {
-    'ru': InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                InlineKeyboardButton(text='FAQ', callback_data="0"),
-                InlineKeyboardButton(text='Связаться с нами', url="https://t.me/iproxy_pl")
-            ],
-            [
-                InlineKeyboardButton(text='Назад', callback_data="back")
-            ]
-        ]
-    ),
-    'en': InlineKeyboardMarkup(
-        inline_keyboard=[
-            [
-                InlineKeyboardButton(text='FAQ', callback_data="0"),
-                InlineKeyboardButton(text='Contact us', url="https://t.me/iproxy_pl")
-            ],
-            [
-                InlineKeyboardButton(text='Back', callback_data="back")
-            ]
-        ]
-    )
-}
 
 selecting_proxy_duration_kb = {
     'ru': InlineKeyboardMarkup(
@@ -78,7 +29,7 @@ selecting_proxy_duration_kb = {
                 ),
             ],
             [
-                 InlineKeyboardButton(text='Назад', callback_data="back")
+                InlineKeyboardButton(text='Назад', callback_data="back")
             ]
         ]
     ),
@@ -105,6 +56,31 @@ selecting_proxy_duration_kb = {
             [
                 InlineKeyboardButton(text='Back', callback_data="back")
             ],
+        ]
+    )
+}
+
+payment_method_selection = {
+    'ru': InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text='Криптовалюта 💲', callback_data="cryptocurrency"),
+                InlineKeyboardButton(text='Карточка 💳', callback_data="bank_card")
+            ],
+            [
+                InlineKeyboardButton(text='Назад', callback_data="back")
+            ]
+        ]
+    ),
+    'en': InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text='Cryptocurrency 💲', callback_data="cryptocurrency"),
+                InlineKeyboardButton(text='Debit card 💳', callback_data="bank_card")
+            ],
+            [
+                InlineKeyboardButton(text='Back', callback_data="back")
+            ]
         ]
     )
 }

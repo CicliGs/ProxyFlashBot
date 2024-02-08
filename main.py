@@ -2,8 +2,7 @@ import asyncio
 
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
-from handlers import bot_messages, user_commands
-from callbacks import callback_button
+from handlers import bot_messages, user_commands, purchase
 from localization.translations import bot_commands
 
 from config_reader import config
@@ -16,8 +15,8 @@ async def main() -> None:
     await bot.set_my_commands(commands=bot_commands['ru'], language_code='ru')
     await bot.set_my_commands(commands=bot_commands['en'], language_code='en')
     dp.include_routers(
+        purchase.router,
         user_commands.router,
-        callback_button.router,
         bot_messages.router
     )
 

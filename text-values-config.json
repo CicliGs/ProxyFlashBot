@@ -1,0 +1,7 @@
+{
+    "order": {
+        "order_1": {"price": 5, "term_ru": "1 день", "term_en": "1 day"},
+        "order_2": {"price": 15, "term_ru": "1 неделя", "term_en": "1 week"},
+        "order_3": {"price": 40, "term_ru": "1 месяц", "term_en": "1 month"}
+    }
+}
