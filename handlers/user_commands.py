@@ -4,6 +4,8 @@ from aiogram.filters import Command, CommandStart
 from aiogram.utils.markdown import hbold
 from localization.translations import choose_language, welcome_message_1, welcome_message_2, available_language
 from config_reader import config
+from database.models import User
+from database.methods.create import add_new_user
 
 from keyboards import inline
 
@@ -16,6 +18,10 @@ async def command_start_handler(message: Message) -> None:
     await message.answer(f"Hello, {hbold(message.from_user.username)}!")
     global language
     language = available_language(message.from_user.language_code)
+
+    user = User(234, None, message.from_user.language_code)
+    add_new_user(user)
+
     await message.answer(welcome_message_1[language])
     await message.answer(welcome_message_2[language])
 
