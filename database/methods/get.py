@@ -1,10 +1,10 @@
 import mysql.connector
 
-from database.models import User, Proxy, Transaction
+from database.models import User, Transaction, Proxy
 from config_reader import config
 
 
-def add_new_user(user: User):
+def get_user_by_id(id) -> User:
     connection = mysql.connector.connect(
         user=config.db_user_name.get_secret_value(),
         password=config.db_password.get_secret_value(),
@@ -13,17 +13,21 @@ def add_new_user(user: User):
     )
     cursor = connection.cursor()
 
-    insert_query = """
-        INSERT INTO users (id, referrer_id, language) VALUES (%s, %s, %s);
+    query = """
+        SELECT * FROM users WHERE id = %s
     """
-
-    cursor.execute(insert_query, (user.user_id, user.referrer_id, user.language))
+    cursor.execute(query, (id,))
+    res = cursor.fetchall()
 
     connection.commit()
     connection.close()
 
+    user = User(res[0][0], res[0][1], res[0][2])
 
-def add_new_proxy(proxy: Proxy):
+    return user
+
+
+def get_transactions_by_user_id(id):
     connection = mysql.connector.connect(
         user=config.db_user_name.get_secret_value(),
         password=config.db_password.get_secret_value(),
@@ -32,21 +36,25 @@ def add_new_proxy(proxy: Proxy):
     )
     cursor = connection.cursor()
 
-    insert_query = """
-        INSERT INTO proxy (user_id, country, proxy, start_proxy_date, end_proxy_date, time) 
-        VALUES (%s, %s, %s, %s, %s, %s);
+    query = """
+        SELECT * FROM transactions WHERE user_id = %s
     """
-
-    cursor.execute(
-        insert_query,
-        (proxy.user_id, proxy.country, proxy.proxy, proxy.start_proxy_date, proxy.end_proxy_date, proxy.time)
-    )
+    cursor.execute(query, (id,))
+    res = cursor.fetchall()
 
     connection.commit()
     connection.close()
 
+    tmp = []
+    for x in res:
+        transaction = Transaction(res[1], res[2], res[3], res[4], res[5])
+        transaction.id = res[0]
+        tmp.append(transaction)
 
-def add_new_transaction(tr: Transaction):
+    return tmp
+
+
+def get_proxy_by_user_id(id):
     connection = mysql.connector.connect(
         user=config.db_user_name.get_secret_value(),
         password=config.db_password.get_secret_value(),
@@ -55,15 +63,19 @@ def add_new_transaction(tr: Transaction):
     )
     cursor = connection.cursor()
 
-    insert_query = """
-        INSERT INTO transactions (user_id, payment_amount, currency, transaction_date, transaction_time)
-        VALUES (%s, %s, %s, %s, %s);
+    query = """
+        SELECT * FROM proxy WHERE user_id = %s
     """
-
-    cursor.execute(
-        insert_query,
-        (tr.user_id, tr.payment_amount, tr.currency, tr.transaction_date, tr.transaction_time)
-    )
+    cursor.execute(query, (id,))
+    res = cursor.fetchall()
 
     connection.commit()
     connection.close()
+
+    tmp = []
+    for x in res:
+        proxy = Proxy(res[1], res[2], res[3], res[4], res[5], res[6])
+        proxy.id = res[0]
+        tmp.append(proxy)
+
+    return tmp

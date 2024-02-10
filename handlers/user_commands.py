@@ -4,13 +4,20 @@ from aiogram.filters import Command, CommandStart
 from aiogram.utils.markdown import hbold
 from localization.translations import choose_language, welcome_message_1, welcome_message_2, available_language
 from config_reader import config
-from database.models import User
+from database.models import User, Proxy
 from database.methods.create import add_new_user
+from database.methods.get import get_user_by_id
+import datetime
 
 from keyboards import inline
 
 router = Router()
 language: str
+
+
+def get_current_time() -> datetime:
+    delta = datetime.timedelta(hours=3, minutes=0)
+    return datetime.datetime.now(datetime.timezone.utc) + delta
 
 
 @router.message(CommandStart())
