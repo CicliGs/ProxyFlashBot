@@ -6,7 +6,9 @@ translations = {
         'Выберите необходимый вариант:': 'Select the desired option:',
         'Данная функция пока в разработке...': 'This feature is still in development...',
         'Выберите длительность работы прокси:': 'Select the duration of the proxy operation:',
-        'Выберите способ оплаты:': 'Select a payment method:'
+        'Выберите способ оплаты:': 'Select a payment method:',
+        'Ваши прокси:\n': 'Your proxies:\n',
+        'У вас нет прокси :(': "You don't have a proxy :("
     }
 }
 

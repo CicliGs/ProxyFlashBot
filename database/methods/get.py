@@ -47,8 +47,8 @@ def get_transactions_by_user_id(id):
 
     tmp = []
     for x in res:
-        transaction = Transaction(res[1], res[2], res[3], res[4], res[5])
-        transaction.id = res[0]
+        transaction = Transaction(x[1], x[2], x[3], x[4], x[5])
+        transaction.id = x[0]
         tmp.append(transaction)
 
     return tmp
@@ -74,8 +74,8 @@ def get_proxy_by_user_id(id):
 
     tmp = []
     for x in res:
-        proxy = Proxy(res[1], res[2], res[3], res[4], res[5], res[6])
-        proxy.id = res[0]
+        proxy = Proxy(x[1], x[2], x[3], x[4], x[5], x[6])
+        proxy.id = x[0]
         tmp.append(proxy)
 
     return tmp
