@@ -3,7 +3,6 @@ from pydantic import SecretStr
 
 class Settings(BaseSettings):
     bot_token: SecretStr
-    payment_token_test: SecretStr
     oxapay_merchant_key: SecretStr
     admin_id: SecretStr
     db_user_name: SecretStr

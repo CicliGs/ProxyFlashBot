@@ -1,6 +1,6 @@
 import mysql.connector
 
-from database.models import User, Transaction, Proxy
+from database.models import Proxy
 from database.methods.get import get_proxy_by_user_id
 import datetime
 from config_reader import config
@@ -11,26 +11,29 @@ def get_current_time() -> datetime:
     return datetime.datetime.now(datetime.timezone.utc) + delta
 
 
-def check_subscription_proxy(id): # Проверка подписки прокси, передеётся id пользователя
+def check_subscription_proxy(id):  # Проверка подписки прокси, передеётся id пользователя
     proxy = get_proxy_by_user_id(id)
-    current_date = datetime.datetime.now().strftime('%d.%m.%y')
-    current_time = get_current_time()
+
+    current_date = datetime.datetime.now() + datetime.timedelta(hours=3)
 
     delete_proxy_id = []  # id удаляемых прокси
+    delete_proxy = []
 
     if isinstance(proxy, Proxy):
-        proxy_date_object = datetime.strptime(proxy.end_proxy_date, '%d.%m.%y').date()
-        proxy_time_object = datetime.strptime(proxy.time, '%H:%M:%S').time()
-
-        if current_date >= proxy_date_object and current_time > proxy_time_object:
+        end_proxy_date = datetime.datetime.strptime(proxy.end_proxy_date + ' ' + proxy.time, '%d.%m.%y %H:%M:%S')
+        if current_date >= end_proxy_date:
+            delete_proxy.append(proxy)
             delete_proxy_id.append(proxy.id)
             # Отправить сообщение о удалении админу
 
     else:
         for x in proxy:
-            proxy_date_object = datetime.strptime(x.end_proxy_date, '%d.%m.%y').date()
-            if current_date > proxy_date_object:
+            end_proxy_date = datetime.datetime.strptime(x.end_proxy_date + ' ' + x.time, '%d.%m.%y %H:%M:%S')
+            if current_date > end_proxy_date:
+                delete_proxy.append(x)
                 delete_proxy_id.append(x.id)
+
+    return delete_proxy
 
     for i in delete_proxy_id:
         delete_proxy_by_user_id(i)

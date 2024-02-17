@@ -46,7 +46,7 @@ async def buy_poland(call: CallbackQuery, state: FSMContext):
 
 @router.callback_query(F.data.startswith('order_'))
 async def buy_duration(call: CallbackQuery, state: FSMContext):
-    language = call.from_user.language_code
+    language = available_language(call.from_user.language_code)
 
     await state.update_data(order=call.data)
 
@@ -62,7 +62,7 @@ async def pay_order(call: CallbackQuery, state: FSMContext, bot: Bot):
     await state.set_state(OrderState.pay_crypto)
 
     data = await state.get_data()
-    lang = call.from_user.language_code
+    lang = available_language(call.from_user.language_code)
     price = order[data['order']]['price']
     await state.update_data(price=price)
 
@@ -104,7 +104,7 @@ async def pay_order(call: CallbackQuery, state: FSMContext, bot: Bot):
 async def check_payment(call: CallbackQuery, state: FSMContext, bot: Bot):
     data = await state.get_data()
 
-    lang = call.from_user.language_code
+    lang = available_language(call.from_user.language_code)
 
     order = payment_details(data["track_id"], lang)
 
