@@ -1,6 +1,7 @@
 import mysql.connector
 
-from database.models import Proxy
+from aiogram import Bot
+from database.models import User, Transaction, Proxy
 from database.methods.get import get_proxy_by_user_id
 import datetime
 from config_reader import config

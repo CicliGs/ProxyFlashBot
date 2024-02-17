@@ -17,6 +17,12 @@ router = Router()
 language: str
 
 
+def syb(id):
+    while True:
+        check_subscription_proxy(id)
+        time.sleep(3600)
+
+
 @router.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
     await message.answer(f"Hello, {hbold(message.from_user.username)}!")
@@ -65,7 +71,13 @@ async def affiliate(message: Message) -> None:
 async def my_proxy(message: Message, bot: Bot) -> None:
     global language
     language = available_language(message.from_user.language_code)
-    check_subscription_proxy(bot, message.from_user.id)
+    result = check_subscription_proxy(message.from_user.id)
+
+    for i in result:
+        await bot.send_message(
+            config.admin_id.get_secret_value(),
+            f"Необходимо удалить прокси {i.proxy}"
+        )
 
     proxy = get_proxy_by_user_id(message.from_user.id)
     if not proxy:
@@ -79,7 +91,7 @@ async def my_proxy(message: Message, bot: Bot) -> None:
 
         if text is not None:
             await message.answer(
-                text=choose_language('Ваши прокси:\n', language)+text
+                text=choose_language('Ваши прокси:\n', language) + text
             )
         else:
             await message.answer(choose_language('У вас нет прокси :(', language))
@@ -95,7 +107,8 @@ async def send_command(message: Message, bot: Bot) -> None:
         target_proxy = args[3]
         duration_proxy = args[4]
 
-        await bot.send_message(target_id, f"Ваш прокси с регионом {country_proxy}: {target_proxy} на {duration_proxy} дней")
+        await bot.send_message(target_id,
+                               f"Ваш прокси с регионом {country_proxy}: {target_proxy} на {duration_proxy} дней")
 
         current_date = datetime.datetime.now().strftime("%d.%m.%y")
         end_date = datetime.datetime.now() + datetime.timedelta(hours=3)
