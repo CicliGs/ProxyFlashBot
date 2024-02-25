@@ -22,6 +22,8 @@ def get_user_by_id(id) -> User:
     connection.commit()
     connection.close()
 
+    if not res:
+        return None
     user = User(res[0][0], res[0][1], res[0][2])
 
     return user

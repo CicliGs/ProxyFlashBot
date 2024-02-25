@@ -13,19 +13,19 @@ selecting_proxy_duration_kb = {
             [
                 InlineKeyboardButton(
                     text=f"{order['order_1']['price']} USDT / {order['order_1']['term_ru']}",
-                    callback_data="order_1",
+                    callback_data='order_1',
                 ),
             ],
             [
                 InlineKeyboardButton(
                     text=f"{order['order_2']['price']} USDT / {order['order_2']['term_ru']}",
-                    callback_data="0"
+                    callback_data='order_2'
                 ),
             ],
             [
                 InlineKeyboardButton(
                     text=f"{order['order_3']['price']} USDT / {order['order_3']['term_ru']}",
-                    callback_data='0'
+                    callback_data='order_3'
                 ),
             ],
             [

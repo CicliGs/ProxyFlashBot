@@ -9,7 +9,6 @@ from database.methods.create import add_new_user, add_new_proxy
 from database.methods.get import get_user_by_id, get_proxy_by_user_id
 from database.methods.delete import check_subscription_proxy
 import datetime
-import time
 
 from keyboards import inline
 
@@ -17,21 +16,17 @@ router = Router()
 language: str
 
 
-def syb(id):
-    while True:
-        check_subscription_proxy(id)
-        time.sleep(3600)
-
-
 @router.message(CommandStart())
 async def command_start_handler(message: Message) -> None:
     await message.answer(f"Hello, {hbold(message.from_user.username)}!")
     global language
     language = available_language(message.from_user.language_code)
+    if language != 'ru' and language != 'en':
+        language = 'en'
 
     user = get_user_by_id(message.from_user.id)
     if user is None:
-        user = User(message.from_user.id, None, message.from_user.language_code)
+        user = User(message.from_user.id, None, language)
         add_new_user(user)
 
     await message.answer(welcome_message_1[language])
@@ -40,8 +35,6 @@ async def command_start_handler(message: Message) -> None:
 
 @router.message(Command("proxy"))
 async def proxy(message: Message) -> None:
-    global language
-    language = available_language(message.from_user.language_code)
     await message.answer(
         choose_language('Выберите регион:', language),
         reply_markup=inline.proxy_kb[language]
@@ -50,8 +43,6 @@ async def proxy(message: Message) -> None:
 
 @router.message(Command("help"))
 async def help(message: Message) -> None:
-    global language
-    language = available_language(message.from_user.language_code)
     await message.answer(
         choose_language('Выберите необходимый вариант:', language),
         reply_markup=inline.help_kb[language]
@@ -60,8 +51,6 @@ async def help(message: Message) -> None:
 
 @router.message(Command("affiliate"))
 async def affiliate(message: Message) -> None:
-    global language
-    language = available_language(message.from_user.language_code)
     await message.answer(
         choose_language('Данная функция пока в разработке...', language)
     )
@@ -69,8 +58,6 @@ async def affiliate(message: Message) -> None:
 
 @router.message(Command("my_proxy"))
 async def my_proxy(message: Message, bot: Bot) -> None:
-    global language
-    language = available_language(message.from_user.language_code)
     result = check_subscription_proxy(message.from_user.id)
 
     for i in result:

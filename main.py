@@ -12,8 +12,8 @@ async def main() -> None:
     bot = Bot(config.bot_token.get_secret_value(), parse_mode=ParseMode.HTML)
     dp = Dispatcher()
 
-    await bot.set_my_commands(commands=bot_commands['ru'], language_code='ru')
-    await bot.set_my_commands(commands=bot_commands['en'], language_code='en')
+    #await bot.set_my_commands(commands=bot_commands['ru'], language_code='ru')
+    #await bot.set_my_commands(commands=bot_commands['en'], language_code='en')
     dp.include_routers(
         purchase.router,
         user_commands.router,
