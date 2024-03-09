@@ -6,7 +6,7 @@ from config_reader import config
 url = 'https://api.oxapay.com/merchants/request'
 
 
-def payment_request(amount: float, lang: str):
+def payment_request(amount: float):
     data = {
         "merchant": config.oxapay_merchant_key.get_secret_value(),
         "amount": amount,

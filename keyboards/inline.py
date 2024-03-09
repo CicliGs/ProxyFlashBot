@@ -13,7 +13,7 @@ proxy_kb = {
                 InlineKeyboardButton(text='Польша', callback_data="buy_country_poland")
             ],
             [
-                InlineKeyboardButton(text='Нужна другая локация', callback_data="0"),
+                InlineKeyboardButton(text='Нужна другая локация', url="https://t.me/iproxy_pl"),
                 InlineKeyboardButton(text='Назад', callback_data="back")
             ]
         ]
@@ -105,6 +105,43 @@ selecting_proxy_duration_kb = {
             [
                 InlineKeyboardButton(text='Back', callback_data="back")
             ],
+        ]
+    )
+}
+
+balance_kb = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text='5 USDT', callback_data='top_up_5')
+        ],
+        [
+            InlineKeyboardButton(text='10 USDT', callback_data='top_up_10')
+        ],
+        [
+            InlineKeyboardButton(text='20 USDT', callback_data='top_up_20')
+        ],
+    ]
+)
+
+balance = {
+    'ru': InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text='Да', callback_data='yes_top_up')
+            ],
+            [
+                InlineKeyboardButton(text='Нет', callback_data='no_top_up')
+            ]
+        ]
+    ),
+    'en': InlineKeyboardMarkup(
+        inline_keyboard=[
+            [
+                InlineKeyboardButton(text='Yes', callback_data='yes_top_up')
+            ],
+            [
+                InlineKeyboardButton(text='No', callback_data='no_top_up')
+            ]
         ]
     )
 }

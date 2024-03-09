@@ -24,7 +24,7 @@ def get_user_by_id(id) -> User:
 
     if not res:
         return None
-    user = User(res[0][0], res[0][1], res[0][2])
+    user = User(res[0][0], res[0][1], res[0][2], res[0][3])
 
     return user
 

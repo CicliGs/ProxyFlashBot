@@ -1,10 +1,18 @@
 
 
 class User:
-    def __init__(self, user_id, referrer_id, language):
+    # def __init__(self, user_id, referrer_id, language):
+    #     self.user_id = user_id
+    #     self.referrer_id = referrer_id
+    #     self.language = language
+    #     self.balance = 0.0
+
+    def __init__(self, user_id, referrer_id, language, balance):
         self.user_id = user_id
         self.referrer_id = referrer_id
         self.language = language
+        self.balance = balance
+
 
 
 class Proxy:
@@ -20,10 +28,10 @@ class Proxy:
 
 
 class Transaction:
-    def __init__(self, user_id, payment_amount, currency, transaction_date, transaction_time):
+    def __init__(self, user_id, payment_amount, track_id, transaction_date, transaction_time):
         self.user_id = user_id
         self.payment_amount = payment_amount
-        self.currency = currency
+        self.track_id = track_id
         self.transaction_date = transaction_date
         self.transaction_time = transaction_time
 

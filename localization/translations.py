@@ -22,6 +22,11 @@ welcome_message_2 = {
     "en": "To buy a proxy, enter the command /proxy. Purchased proxies will be displayed in the /my_proxy tab. You can view all the bot's functions by opening the menu"
 }
 
+welcome_message_3 = {
+    'ru': 'Для пополнения баланса, введите в чат сумму в USDT',
+    'en': 'To replenish the balance, enter the amount in USDT in the chat room'
+}
+
 payment_method_selection = {
     "ru": "Выберите способ оплаты:",
     "en": "Select a payment method:"
@@ -37,13 +42,15 @@ bot_commands = {
         BotCommand(command="/proxy", description="Купить прокси"),
         BotCommand(command="/help", description="Помощь"),
         BotCommand(command="/affiliate", description="Партнёрская программа"),
-        BotCommand(command="/my_proxy", description="Мои прокси")
+        BotCommand(command="/my_proxy", description="Мои прокси"),
+        BotCommand(command='/profile', description='Мой профиль')
     ],
     'en': [
         BotCommand(command="/proxy", description="Buy proxy"),
         BotCommand(command="/help", description="Help"),
         BotCommand(command="/affiliate", description="Affiliate program"),
-        BotCommand(command="/my_proxy", description="My proxy")
+        BotCommand(command="/my_proxy", description="My proxy"),
+        BotCommand(command='/profile', description='My profile')
     ]
 }
 

@@ -6,7 +6,7 @@ from config_reader import config
 url = 'https://api.oxapay.com/merchants/inquiry'
 
 
-def payment_details(track_id: int, lang: str):
+def payment_details(track_id: int):
     data = {
         "merchant": config.oxapay_merchant_key.get_secret_value(),
         "trackId": track_id

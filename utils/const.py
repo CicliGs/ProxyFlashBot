@@ -1,0 +1,2 @@
+class Const:
+    temp: float

@@ -14,10 +14,10 @@ def add_new_user(user: User):
     cursor = connection.cursor()
 
     insert_query = """
-        INSERT INTO users (id, referrer_id, language) VALUES (%s, %s, %s);
+        INSERT INTO users (id, referrer_id, language, balance) VALUES (%s, %s, %s, %s);
     """
 
-    cursor.execute(insert_query, (user.user_id, user.referrer_id, user.language))
+    cursor.execute(insert_query, (user.user_id, user.referrer_id, user.language, user.balance))
 
     connection.commit()
     connection.close()
@@ -56,13 +56,13 @@ def add_new_transaction(tr: Transaction):
     cursor = connection.cursor()
 
     insert_query = """
-        INSERT INTO transactions (user_id, payment_amount, currency, transaction_date, transaction_time)
+        INSERT INTO transactions (user_id, payment_amount, track_id, transaction_date, transaction_time)
         VALUES (%s, %s, %s, %s, %s);
     """
 
     cursor.execute(
         insert_query,
-        (tr.user_id, tr.payment_amount, tr.currency, tr.transaction_date, tr.transaction_time)
+        (tr.user_id, tr.payment_amount, tr.track_id, tr.transaction_date, tr.transaction_time)
     )
 
     connection.commit()
